@@ -50,13 +50,13 @@ class Graph:
                 for next_vertex in self.get_neighbors(v):
                     s.push(next_vertex)
 
-    def dft_recursive(self, starting_vertex):
+    def dft_recursive(self, starting_vertex, visited=None):
         # instantiate if needed
        if visited is None:
             visited = set()
 
          # start   
-        if starting_vertex not in visited:
+       if starting_vertex not in visited:
             visited.add(starting_vertex)
             print(starting_vertex)
             for next_vertex in self.get_neighbors(starting_vertex):
@@ -81,7 +81,7 @@ class Graph:
                 new_path.append(adjacent)
                 q.enqueue(new_path)
 
-    def dfs(self, starting_vertex, destination_vertex):
+    def dfs(self, starting_vertex, destination_vertex, visited=[]):
         path = []
         s = Stack()
         s.push(starting_vertex)
@@ -102,15 +102,22 @@ class Graph:
                 for next_vert in self.get_neighbors(v):
                     s.push(next_vert)
 
-    def dfs_recursive(self, starting_vertex, destination_vertex):
-        """
-        Return a list containing a path from
-        starting_vertex to destination_vertex in
-        depth-first order.
-
-        This should be done using recursion.
-        """
-        pass  # TODO
+    def dfs_recursive(self, starting_vertex, destination_vertex, visited=[]):
+        if starting_vertex == destination_vertex:
+            print('target found!', starting_vertex)
+            return visited + [starting_vertex]
+        else:
+            visited.append(starting_vertex)
+            for edge in self.get_neighbors(starting_vertex):
+                print(f'{edge} is a neighbor to {starting_vertex}:{self.get_neighbors(starting_vertex)}')
+                if edge not in visited:
+                    print(f'{edge} not in visited, recurse, append {starting_vertex} if not in list')
+                    path = self.dfs_recursive(edge, destination_vertex, visited)
+                    if path:
+                        print('path is', path)
+                        return path
+            visited.remove(starting_vertex)
+            print(f'Delete: {starting_vertex} its exit {edge} has been visited and no path to {destination_vertex} was found')
 
 if __name__ == '__main__':
     graph = Graph()  # Instantiate your graph
