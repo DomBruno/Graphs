@@ -10,10 +10,8 @@ class Graph:
         self.vertices = {}
 
     def add_vertex(self, vertex_id):
-        """
-        Add a vertex to the graph.
-        """
-        pass  # TODO
+        # Make a set of edges
+        self.vertices[vertex_id] = set()
 
     def add_edge(self, v1, v2):
         """
