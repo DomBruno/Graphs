@@ -49,7 +49,7 @@ class Graph:
                 visited.add(v)
                 for next_vertex in self.get_neighbors(v):
                     s.push(next_vertex)
-                    
+
     def dft_recursive(self, starting_vertex):
         # instantiate if needed
        if visited is None:
@@ -64,20 +64,43 @@ class Graph:
 
 
     def bfs(self, starting_vertex, destination_vertex):
-        """
-        Return a list containing the shortest path from
-        starting_vertex to destination_vertex in
-        breath-first order.
-        """
-        pass  # TODO
+        q = Queue()
+        #push start of path into Queue
+        q.enqueue([starting_vertex])
+        while q.size() > 0:
+            # get first path from Queue
+            path = q.dequeue()
+            #get last vertex from path
+            last_vert = path[-1]
+            # path found
+            if last_vert == destination_vertex:
+                return path
+            # enumerate all adjacent nodes, build a new path, and push into queue
+            for adjacent in self.get_neighbors(last_vert):
+                new_path = list(path)
+                new_path.append(adjacent)
+                q.enqueue(new_path)
 
     def dfs(self, starting_vertex, destination_vertex):
-        """
-        Return a list containing a path from
-        starting_vertex to destination_vertex in
-        depth-first order.
-        """
-        pass  # TODO
+        path = []
+        s = Stack()
+        s.push(starting_vertex)
+
+        visited = set()
+
+        while s.size() > 0:
+            #mark first vertex
+            v = s.pop()
+            if v not in visited:
+                #mark visited
+                visited.add(v)
+                #add to path
+                path.append(v)
+                if v == destination_vertex:
+                    return path
+                    
+                for next_vert in self.get_neighbors(v):
+                    s.push(next_vert)
 
     def dfs_recursive(self, starting_vertex, destination_vertex):
         """
